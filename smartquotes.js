@@ -42,18 +42,13 @@
 
   smartquotes.string = function(str) {
     return str
-      .replace(/'''/g, '\u2034')                                                   // triple prime
-      .replace(/([^A-Za-z0-9_가-힣ㄱ-ㅎ]|^)"([A-Za-z0-9_가-힣ㄱ-ㅎ])/g, '$1\u201c$2')                                      // beginning "
-      .replace(/(\u201c[^"]*)"([^"]*$|[^\u201c"]*\u201c)/g, '$1\u201d$2')          // ending "
-      .replace(/([^0-9])"/g,'$1\u201d')                                            // remaining " at end of word
-      .replace(/''/g, '\u2033')                                                    // double prime as two single quotes
-      .replace(/([^A-Za-z0-9_가-힣ㄱ-ㅎ]|^)'(\S)/g, '$1\u2018$2')                  // beginning '
-      .replace(/([a-z])'([a-z])/ig, '$1\u2019$2')                                  // conjunction's possession
-      .replace(/(\u2018)([0-9]{2}[^\u2019]*)(\u2018([^0-9]|$)|$|\u2019[a-z])/ig, '\u2019$2$3')     // abbrev. years like '93
-      .replace(/((\u2018[^']*)|[a-z])'([^0-9]|$)/ig, '$1\u2019$3')                 // ending '
-      .replace(/(\B|^)\u2018(?=([^\u2018\u2019]*\u2019\b)*([^\u2018\u2019]*\B[^A-Za-z0-9_가-힣ㄱ-ㅎ][\u2018\u2019]\b|[^\u2018\u2019]*$))/ig, '$1\u2019') // backwards apostrophe
-      .replace(/"/g, '\u2033')                                                     // double prime
-      .replace(/'/g, '\u2032');                                                    // prime
+      .replace(/([^A-Za-z0-9_가-힣ㄱ-ㅎ]|^)"([A-Za-z0-9_가-힣ㄱ-ㅎ])/g, '$1“$2') // 맨앞 "
+      .replace(/([^A-Za-z0-9_가-힣ㄱ-ㅎ]|^)'([A-Za-z0-9_가-힣ㄱ-ㅎ])/g, '$1‘$2') // 맨앞 '
+      .replace(/(“[^"]*)"([^"]*$|[^“"]*“)/g, '$1”$2')              // 맨끝 "
+      .replace(/(“[^']*)"([^']*$|[^‘']*‘)/g, '$1’$2')              // 맨끝 "
+      .replace(/([^0-9])"/g,'$1”')                          // 단어 끝 "
+      .replace(/([^'’])'/g,'$1’')                          // 단어 끝 "
+      ;
   };
 
   smartquotes.element = function(root) {
